@@ -17,7 +17,10 @@ addNode("blank", {
 
 
 addLayer("tree-tab", {
-    tabFormat: [["tree", function() {return (layoutInfo.treeLayout ? layoutInfo.treeLayout : TREE_LAYERS)}]],
+    tabFormat: [["tree", function() {return (layoutInfo.treeLayout ? layoutInfo.treeLayout : TREE_LAYERS)}],
+    ["display-text",()=>JSON.stringify(mod)],
+    "clickables",
+    ],
     previousTab: "",
     leftTab: true,
 })
