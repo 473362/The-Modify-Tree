@@ -49,7 +49,7 @@ addLayer("c", {
         effectDescription() { // Optional text to describe the effects
             eff = this.effect();
             eff.waffleBoost = eff.waffleBoost.times(buyableEffect(this.layer, 11).first)
-            return "which are boosting waffles by "+format(eff.waffleBoost)+" and increasing the Ice Cream cap by "+format(eff.icecreamCap)
+            return ",which are boosting waffles by "+format(eff.waffleBoost)+" and increasing the Ice Cream cap by "+format(eff.icecreamCap)
         },
         infoboxes:{
             coolInfo: {

@@ -262,8 +262,6 @@ function loadVue() {
 			<h2 v-bind:style="{'color': tmp[layer].color, 'text-shadow': '0px 0px 10px ' + tmp[layer].color}">{{data ? format(player[layer].points, data) : formatWhole(player[layer].points)}}</h2>
 			<editable :data="tmp[layer].resource" 
 					:ptr='layer+"-resource"'></editable>
-			<span v-if="layers[layer].effectDescription">, 
-			<span v-html="run(layers[layer].effectDescription, layers[layer])"></span></span>
 			<editable :data="run(layers[layer].effectDescription, layers[layer])" 
 					:ptr='layer+"-effectDescription"'></editable>
 			<br><br></div>
