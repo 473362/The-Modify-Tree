@@ -1,8 +1,15 @@
 var app;
 
-//:id='layer + "--" + data+ "-"'  contenteditable="true" class="contenteditable"
 
 function loadVue() {
+	Vue.component('editable', {
+		props: ['data','ptr'],
+		template: `
+			<span v-html="data" contenteditable="true"
+			 onfocus="editableOnFocus(this)"
+			 onblur="editableOnBlur(this)"></span>
+		`
+	})
 	// data = a function returning the content (actually HTML)
 	Vue.component('display-text', {
 		props: ['layer', 'data'],
@@ -96,12 +103,13 @@ function loadVue() {
 			<button class="story-title" v-bind:style="[{'background-color': tmp[layer].color}, tmp[layer].infoboxes[data].titleStyle]"
 				v-on:click="player.infoboxes[layer][data] = !player.infoboxes[layer][data]">
 				<span class="story-toggle">{{player.infoboxes[layer][data] ? "+" : "-"}}</span>
-				<span v-html="tmp[layer].infoboxes[data].title ? tmp[layer].infoboxes[data].title : (tmp[layer].name)"
-				:id='layer + "-infoboxes-" + data+ "-title"'  contenteditable="true" class="contenteditable"></span>
+				<editable :data="tmp[layer].infoboxes[data].title" 
+						:ptr=' layer+"-infoboxes-"+data+"-title"'></editable>
+				
 			</button>
 			<div v-if="!player.infoboxes[layer][data]" class="story-text" v-bind:style="tmp[layer].infoboxes[data].bodyStyle">
-				<span v-html="tmp[layer].infoboxes[data].body ? tmp[layer].infoboxes[data].body : 'Blah'"
-				:id='layer + "-infoboxes-" + data+ "-body"'  contenteditable="true" class="contenteditable"></span>
+				<editable :data="tmp[layer].infoboxes[data].body" 
+						:ptr=' layer+"-infoboxes-"+data+"-body"'></editable>
 			</div>
 		</div>
 		`
@@ -143,8 +151,9 @@ function loadVue() {
 		template: `
 		<div v-if="tmp[layer].challenges && tmp[layer].challenges[data]!== undefined && tmp[layer].challenges[data].unlocked && !(options.hideChallenges && maxedChallenge(layer, [data]) && !inChallenge(layer, [data]))"
 			v-bind:class="['challenge', challengeStyle(layer, data), player[layer].activeChallenge === data ? 'resetNotify' : '']" v-bind:style="tmp[layer].challenges[data].style">
-			<br><h3 v-html="tmp[layer].challenges[data].name"
-			:id='layer + "-challenges-" + data+ "-name"'  contenteditable="true" class="contenteditable"></h3><br><br>
+			<br><h3>
+				<editable :data="tmp[layer].challenges[data].name" 
+						:ptr=' layer+"-challenges-"+data+"-name"'></editable></h3><br><br>
 			<button v-bind:class="{ longUpg: true, can: true, [layer]: true }" v-bind:style="{'background-color': tmp[layer].color}" v-on:click="startChallenge(layer, data)">{{challengeButtonText(layer, data)}}</button><br><br>
 			<span v-if="layers[layer].challenges[data].fullDisplay" v-html="run(layers[layer].challenges[data].fullDisplay, layers[layer].challenges[data])"></span>
 			<span v-else>
@@ -182,14 +191,16 @@ function loadVue() {
 			v-bind:style="[((!hasUpgrade(layer, data) && canAffordUpgrade(layer, data)) ? {'background-color': tmp[layer].color} : {}), tmp[layer].upgrades[data].style]">
 			<span v-if="layers[layer].upgrades[data].fullDisplay" v-html="run(layers[layer].upgrades[data].fullDisplay, layers[layer].upgrades[data])"></span>
 			<span v-else>
-				<span v-if= "tmp[layer].upgrades[data].title"><h3 v-html="tmp[layer].upgrades[data].title"
-					:id='layer + "-upgrades-" + data+ "-title"'  contenteditable="true" class="contenteditable"></h3><br></span>
-				<span v-html="tmp[layer].upgrades[data].description"
-					:id='layer + "-upgrades-" + data+ "-description"'  contenteditable="true" class="contenteditable"></span>
+				<h3>
+					<editable :data="tmp[layer].upgrades[data].title" 
+							:ptr=' layer+"-upgrades-"+data+"-title"'></editable>
+				</h3><br>
+				<editable :data="tmp[layer].upgrades[data].description" 
+						:ptr=' layer+"-upgrades-"+data+"-description"'></editable>
 				<span v-if="layers[layer].upgrades[data].effectDisplay"><br>Currently: <span v-html="run(layers[layer].upgrades[data].effectDisplay, layers[layer].upgrades[data])"></span></span>
 				<br><br>Cost: 
-					<span v-html="formatWhole(tmp[layer].upgrades[data].cost)" 
-						:id='layer + "-upgrades-" + data+ "-cost"'  contenteditable="true" class="contenteditable"></span> 
+					<editable :data="tmp[layer].upgrades[data].cost" 
+							:ptr='layer+"-upgrades-"+data+"-cost"'></editable>
 				{{(tmp[layer].upgrades[data].currencyDisplayName ? tmp[layer].upgrades[data].currencyDisplayName : tmp[layer].resource)}}
 			</span>
 			<tooltip v-if="tmp[layer].upgrades[data].tooltip" :text="tmp[layer].upgrades[data].tooltip"></tooltip>
@@ -217,14 +228,13 @@ function loadVue() {
 		props: ['layer', 'data'],
 		template: `
 		<td v-if="tmp[layer].milestones && tmp[layer].milestones[data]!== undefined && milestoneShown(layer, data) && tmp[layer].milestones[data].unlocked" v-bind:style="[tmp[layer].milestones[data].style]" v-bind:class="{milestone: !hasMilestone(layer, data), tooltipBox: true, milestoneDone: hasMilestone(layer, data)}">
-			<h3 v-html="tmp[layer].milestones[data].requirementDescription"
-			:id='layer + "-milestones-" + data+ "-requirementDescription"'  contenteditable="true" class="contenteditable"></h3><br>
-			<span v-html="run(layers[layer].milestones[data].effectDescription, layers[layer].milestones[data])"></span><br>
+			<h3><editable :data="tmp[layer].milestones[data].requirementDescription" :ptr='layer + "-milestones-" + data+ "-requirementDescription"'></editable></h3><br>
+			<editable :data="run(layers[layer].milestones[data].effectDescription, layers[layer].milestones[data])" :ptr='layer + "-milestones-" + data+ "-effectDescription"'></editable><br>
 			<tooltip v-if="tmp[layer].milestones[data].tooltip" :text="tmp[layer].milestones[data].tooltip"></tooltip>
 
 		<span v-if="(tmp[layer].milestones[data].toggles)&&(hasMilestone(layer, data))" v-for="toggle in tmp[layer].milestones[data].toggles"><toggle :layer= "layer" :data= "toggle" v-bind:style="tmp[layer].componentStyles.toggle"></toggle>&nbsp;</span></td></tr>
 		`
-	})
+	})//editable
 
 	Vue.component('toggle', {
 		props: ['layer', 'data'],
@@ -250,10 +260,13 @@ function loadVue() {
 		template: `
 		<div><span v-if="player[layer].points.lt('1e1000')">You have </span>
 			<h2 v-bind:style="{'color': tmp[layer].color, 'text-shadow': '0px 0px 10px ' + tmp[layer].color}">{{data ? format(player[layer].points, data) : formatWhole(player[layer].points)}}</h2>
-			<span v-html="tmp[layer].resource"
-			:id='layer + "-resource" '  contenteditable="true" class="contenteditable"></span>
+			<editable :data="tmp[layer].resource" 
+					:ptr='layer+"-resource"'></editable>
 			<span v-if="layers[layer].effectDescription">, 
-			<span v-html="run(layers[layer].effectDescription, layers[layer])"></span></span><br><br></div>
+			<span v-html="run(layers[layer].effectDescription, layers[layer])"></span></span>
+			<editable :data="run(layers[layer].effectDescription, layers[layer])" 
+					:ptr='layer+"-effectDescription"'></editable>
+			<br><br></div>
 		`
 	})
 
@@ -294,8 +307,9 @@ function loadVue() {
 			v-bind:style="[tmp[layer].buyables[data].canBuy ? {'background-color': tmp[layer].color} : {}, tmp[layer].componentStyles.buyable, tmp[layer].buyables[data].style]"
 			v-on:click="if(!interval) buyBuyable(layer, data)" :id='"buyable-" + layer + "-" + data' @mousedown="start" @mouseleave="stop" @mouseup="stop" @touchstart="start" @touchend="stop" @touchcancel="stop">
 				<span v-if= "tmp[layer].buyables[data].title">
-					<h2 v-html="tmp[layer].buyables[data].title"
-					:id='layer + "-buyables-" + data+ "-title"'  contenteditable="true" class="contenteditable"></h2><br></span>
+					<h2>
+					<editable :data="tmp[layer].buyables[data].title" 
+						:ptr=' layer+"-buyables-"+data+"-title"'></editable></h2><br></span>
 				<span v-bind:style="{'white-space': 'pre-line'}" v-html="run(layers[layer].buyables[data].display, layers[layer].buyables[data])"></span>
 				<node-mark :layer='layer' :data='tmp[layer].buyables[data].marked'></node-mark>
 				<tooltip v-if="tmp[layer].buyables[data].tooltip" :text="tmp[layer].buyables[data].tooltip"></tooltip>
@@ -347,7 +361,7 @@ function loadVue() {
 			</div>
 		</div>
 	`
-	})//:id='layer + "-upgrades-" + data+ "-description"'  contenteditable="true" class="contenteditable"
+	})
 
 	// data = id of clickable
 	Vue.component('clickable', {
