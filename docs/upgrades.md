@@ -25,9 +25,9 @@ Usually, upgrades should have an id where the first digit is the row and the sec
 
 Individual upgrades can have these features:
 
-- title: **optional**. Displayed at the top in a larger font. It can also be a function that returns updating text. Can use basic HTML.
+- title: **optional**. Displayed at the top in a larger font. It can also be a function that returns updating text. Can use basic HTML.[已可编辑]
 
-- description: A description of the upgrade's effect. *You will also have to implement the effect where it is applied.* It can also be a function that returns updating text. Can use basic HTML.
+- description: A description of the upgrade's effect. *You will also have to implement the effect where it is applied.* It can also be a function that returns updating text. Can use basic HTML.[已可编辑]
 
 - effect(): **optional**. A function that calculates and returns the current values of any bonuses from the upgrade. Can return a value or an object containing multiple values.
 
@@ -35,7 +35,7 @@ Individual upgrades can have these features:
 
 - fullDisplay(): **OVERRIDE**. Overrides the other displays and descriptions, and lets you set the full text for the upgrade. Can use basic HTML.
 
-- cost: **sort of optional** A Decimal for the cost of the upgrade. By default, upgrades cost the main prestige currency for the layer.
+- cost: **sort of optional** A Decimal for the cost of the upgrade. By default, upgrades cost the main prestige currency for the layer.[已可编辑]
 
 - unlocked(): **optional**. A function returning a bool to determine if the upgrade is visible or not. Default is unlocked.
 

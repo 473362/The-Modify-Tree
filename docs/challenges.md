@@ -26,7 +26,7 @@ Usually, each challenge should have an id where the first digit is the row and t
 
 Individual Challenges can have these features:
 
-- name: Name of the challenge, can be a string or a function. Can use basic HTML.
+- name: Name of the challenge, can be a string or a function. Can use basic HTML.[已可编辑]
 
 - challengeDescription: A description of what makes the challenge a challenge. *You will need to implement these elsewhere.* It can also be a function that returns updating text. Can use basic HTML.
 

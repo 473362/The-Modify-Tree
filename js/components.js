@@ -199,7 +199,7 @@ function loadVue() {
 						:ptr=' layer+"-upgrades-"+data+"-description"'></editable>
 				<span v-if="layers[layer].upgrades[data].effectDisplay"><br>Currently: <span v-html="run(layers[layer].upgrades[data].effectDisplay, layers[layer].upgrades[data])"></span></span>
 				<br><br>Cost: 
-					<editable :data="tmp[layer].upgrades[data].cost" 
+					<editable :data="formatWhole(tmp[layer].upgrades[data].cost)" 
 							:ptr='layer+"-upgrades-"+data+"-cost"'></editable>
 				{{(tmp[layer].upgrades[data].currencyDisplayName ? tmp[layer].upgrades[data].currencyDisplayName : tmp[layer].resource)}}
 			</span>

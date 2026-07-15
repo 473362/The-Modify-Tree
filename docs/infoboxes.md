@@ -19,9 +19,9 @@ infoboxes: {
 
 Features:
 
-- title: The text displayed above the main box. Can be a function to be dynamic, and can use basic HTML.
+- title: The text displayed above the main box. Can be a function to be dynamic, and can use basic HTML.[已可编辑]
 
-- body: The text displayed inside the box. Can be a function to be dynamic, and can use basic HTML.
+- body: The text displayed inside the box. Can be a function to be dynamic, and can use basic HTML.[已可编辑]
 
 - style, titleStyle, bodyStyle: **optional**. Apply CSS to the infobox, or to the title button or body of the infobox, in the form of an object where the keys are CSS attributes, and the values are the values for those attributes (both as strings).
 
