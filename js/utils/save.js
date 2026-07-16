@@ -7,6 +7,7 @@ function save(force) {
 	localStorage.setItem(getModID(), btoa(unescape(encodeURIComponent(JSON.stringify(player)))));
 	localStorage.setItem(getModID()+"_options", btoa(unescape(encodeURIComponent(JSON.stringify(options)))));
 
+	localStorage.setItem(getModID()+"_mod", (JSON.stringify(mod)));
 }
 function startPlayerBase() {
 	return {
@@ -211,6 +212,8 @@ function load() {
 	updateLayers();
 	setupModInfo();
 
+	setupMod();
+
 	setupTemp();
 	updateTemp();
 	updateTemp();
@@ -234,6 +237,16 @@ function setupModInfo() {
 	modInfo.winText = winText ? winText : `Congratulations! You have reached the end and beaten this game, but for now...`;
 
 }
+
+
+function setupMod() {
+    debugger;
+    mod=JSON.parse(localStorage.getItem(getModID()+"_mod"));
+    let mod2=JSON.parse(localStorage.getItem(getModID()+"_mod"));
+    fixData(layers,mod2);
+    layers=mod2;
+}
+
 function fixNaNs() {
 	NaNcheck(player);
 }

@@ -68,27 +68,19 @@ addLayer("tree-tab", {
             }
         },
         12:{
-            title:"How to modify the tree while it's running",
-            canClick:false,
+            title:"Import mod",
+            canClick:true,
             onClick(){
                 let imported = prompt("Paste your save here");
                 if(imported){
                     ticking=true;
-                    setTimeout(()=>{
                     try {
                         mod = JSON.parse(imported);
-                        let mod2=JSON.parse(imported)
-                        fixData(layers,mod2);
-                        fixData(mod2,layers);
-                        tmp = {}
-                        temp = tmp 
-                        funcs = {}
-                        app=undefined;
-                        load()
-                        ticking=false;
+                        save();
+                		window.location.reload();
                     } catch (e) {
                         return;
-                    }})
+                    }
                 }
             }
         }

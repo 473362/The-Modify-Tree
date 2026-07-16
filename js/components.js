@@ -10,14 +10,26 @@ function loadVue() {
 			 onblur="editableOnBlur(this)"></span>
 		`
 	})
-	// data = a function returning the content (actually HTML)
-	Vue.component('display-text', {
-		props: ['layer', 'data'],
+	Vue.component('add-component', {
+		props: ['layer','data','key'],
 		template: `
-			<span class="instant" v-html="data"></span>
+			<button title="添加组件（未完成）" class='addComponent'>+</button>
 		`
 	})
-
+	// data = a function returning the content (actually HTML)
+	Vue.component('display-text', {
+		props: ['layer', 'data','key'],
+/*		template: `
+			
+			<editable :data="data" 
+						:ptr='key'
+						:key='key'></editable>
+		`*/
+		template: `
+			<span class="instant"  v-html="data"></span>
+		`
+	})
+//<span class="instant" v-html="data"></span>
 // data = a function returning the content (actually HTML)
 	Vue.component('raw-html', {
 			props: ['layer', 'data'],
@@ -67,7 +79,7 @@ function loadVue() {
 
 	// data = an array of Components to be displayed in a column
 	Vue.component('column', {
-		props: ['layer', 'data'],
+		props: ['layer', 'data', "key"],
 		computed: {
 			key() {return this.$vnode.key}
 		},
@@ -75,9 +87,24 @@ function loadVue() {
 		<div class="upgTable instant">
 			<div class="upgCol">
 				<div v-for="(item, index) in data">
-					<div v-if="!Array.isArray(item)" v-bind:is="item" :layer= "layer" v-bind:style="tmp[layer].componentStyles[item]" :key="key + '-' + index"></div>
-					<div v-else-if="item.length==3" v-bind:style="[tmp[layer].componentStyles[item[0]], (item[2] ? item[2] : {})]" v-bind:is="item[0]" :layer= "layer" :data= "item[1]" :key="key + '-' + index"></div>
-					<div v-else-if="item.length==2" v-bind:is="item[0]" :layer= "layer" :data= "item[1]" v-bind:style="tmp[layer].componentStyles[item[0]]" :key="key + '-' + index"></div>
+					<div v-if="!Array.isArray(item)" 
+				  v-bind:is="item" 
+				    	:layer= "layer" 
+				  v-bind:style="tmp[layer].componentStyles[item]" 
+				  		:key="key + '-' + index"></div>
+					<div v-else-if="item.length==3" 
+				  v-bind:style="[tmp[layer].componentStyles[item[0]], (item[2] ? item[2] : {})]" 
+				  v-bind:is="item[0]" 
+				  		:layer= "layer" 
+						:data= "item[1]" 
+						:key="key + '-' + index">
+					</div>
+					<div v-else-if="item.length==2" 
+				  v-bind:is="item[0]" 
+				  		:layer= "layer" 
+						:data= "item[1]" 
+				  v-bind:style="tmp[layer].componentStyles[item[0]]" 
+						:key="key + '-' + index"></div>
 				</div>
 			</div>
 		</div>

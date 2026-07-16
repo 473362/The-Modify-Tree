@@ -1,0 +1,11 @@
+.addComponent{
+    background-color: #0000;
+    color: #fff;
+    height: 100px;
+    width: 100px;
+    border-radius: 20px;
+    border-width: 5px;
+    border-color: #fff;
+    font-size: 40px;
+    font-weight: 900;
+}
