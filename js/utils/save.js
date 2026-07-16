@@ -240,9 +240,10 @@ function setupModInfo() {
 
 
 function setupMod() {
-    debugger;
-    mod=JSON.parse(localStorage.getItem(getModID()+"_mod"));
-    let mod2=JSON.parse(localStorage.getItem(getModID()+"_mod"));
+    let get=localStorage.getItem(getModID()+"_mod")
+	if(!get)return;
+    mod=JSON.parse(get);
+    let mod2=JSON.parse(get);
     fixData(layers,mod2);
     layers=mod2;
 }
