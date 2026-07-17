@@ -241,7 +241,7 @@ function setupModInfo() {
 
 function setupMod() {
     let get=localStorage.getItem(getModID()+"_mod")
-	if(!get)return;
+	if(get=='null')return;
     mod=JSON.parse(get);
     let mod2=JSON.parse(get);
     fixData(layers,mod2);
