@@ -71,7 +71,7 @@ addLayer("tree-tab", {
             title:"Import mod",
             canClick:true,
             onClick(){
-                let imported = prompt("Paste your save here");
+                let imported = prompt("Paste mod of someone you trust here");
                 if(imported){
                     ticking=true;
                     try {

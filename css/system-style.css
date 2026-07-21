@@ -213,10 +213,10 @@ ul {
 	top: 65px;
 	background-color: transparent;
 }
-
+/*
 button > * {
 	pointer-events:none;
-}
+}*/
 
 .ghost {
 	visibility: hidden
