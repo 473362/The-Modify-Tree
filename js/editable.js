@@ -12,9 +12,18 @@ function editableOnFocus(ptr){
         p=p[i],m=m[i],f=f[i],l=l[i];
     }
     if(f[t]||typeof m[t]==="function"){
-        ptr.innerText=l[t]
-        ptr.style.float="left",ptr.style.textAlign="left"
+        ptr.innerText=l[t];
+        Object.assign(ptr.style,({//背景色我继承不了了，气死我了
+            position: "relative",
+            zIndex: 1,
+            float: "inline-start",
+            textAlign: "left",
+            backgroundColor: "#000",
+            color: "#0f0",
+            outline: "#fff dashed 1px",
+        }))
     }
+    else ptr.innerHTML=l[t];
 }
 
 function editableOnBlur(ptr){
@@ -33,8 +42,11 @@ function editableOnBlur(ptr){
         for(i in e){p[t]=f[t]=l[t]=e[i]}
         ptr.style={};
     }
-    else if(m[t] instanceof Decimal)p[t]=m[t]=l[t]=new Decimal(ptr.innerHTML);
-    else p[t]=m[t]=l[t]=ptr.innerHTML
+    else if(m[t] instanceof Decimal){
+        p[t]=m[t]=l[t]=new Decimal(ptr.innerHTML);
+        ptr.innerHTML=ptr.__vue__.data;
+    }
+    else p[t]=m[t]=l[t]=ptr.innerHTML,ptr.innerHTML=ptr.__vue__.data;
 }
 
 
