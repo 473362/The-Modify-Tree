@@ -7,7 +7,7 @@ function save(force) {
 	localStorage.setItem(getModID(), btoa(unescape(encodeURIComponent(JSON.stringify(player)))));
 	localStorage.setItem(getModID()+"_options", btoa(unescape(encodeURIComponent(JSON.stringify(options)))));
 
-	localStorage.setItem(getModID()+"_mod", (JSON.stringify(mod)));
+	localStorage.setItem(getModID()+"_mod", (modstringify(mod)));
 }
 function startPlayerBase() {
 	return {
@@ -241,9 +241,9 @@ function setupModInfo() {
 
 function setupMod() {
     let get=localStorage.getItem(getModID()+"_mod")
-	if(get=='null')return;
-    mod=JSON.parse(get);
-    let mod2=JSON.parse(get);
+	if(!get||get=='null')return;
+    mod=eval("("+get+")");
+    let mod2=eval("("+get+")");
     fixData(layers,mod2);
     layers=mod2;
 }

@@ -86,6 +86,7 @@ var systemComponents = {
 			<challenges v-bind:style="tmp[layer].componentStyles['challenges']" :layer="layer"></challenges>
 			<achievements v-bind:style="tmp[layer].componentStyles.achievements" :layer="layer"></achievements>
 			<br><br>
+			<add-component></add-component>
 		</div>
 		<div v-if="tmp[layer].tabFormat">
 			<div v-if="Array.isArray(tmp[layer].tabFormat)">
@@ -102,8 +103,8 @@ var systemComponents = {
 					:key="this.$vnode.key + '-' + layer"
 					></layer-tab>
 				<column v-else :layer="layer" :data="tmp[layer].tabFormat[player.subtabs[layer].mainTabs].content" :key="this.$vnode.key + '-col'"></column>
-				<add-component></add-component>
-			</div>
+				
+			</div><br><add-component></add-component>
 		</div></div>
 			`
 	},

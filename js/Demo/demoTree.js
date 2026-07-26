@@ -48,7 +48,7 @@ addNode("h", {
 
 addLayer("tree-tab", {
     tabFormat: [["tree", function() {return (layoutInfo.treeLayout ? layoutInfo.treeLayout : TREE_LAYERS)}],
-    ["display-text",()=>JSON.stringify(mod)],
+    ["display-text",()=>modstringify(mod)],
     "clickables",],
     previousTab: "",
     leftTab: true,
@@ -59,7 +59,7 @@ addLayer("tree-tab", {
             canClick:true,
             onClick(){
                 const el = document.createElement("textarea");
-                el.value = JSON.stringify(mod);
+                el.value = modstringify(mod);
                 document.body.appendChild(el);
                 el.select();
                 el.setSelectionRange(0, 99999);
@@ -68,6 +68,19 @@ addLayer("tree-tab", {
             }
         },
         12:{
+            title:"Export layer.js to clipboard",
+            canClick:true,
+            onClick(){
+                const el = document.createElement("textarea");
+                el.value = get_layer_js();
+                document.body.appendChild(el);
+                el.select();
+                el.setSelectionRange(0, 99999);
+                document.execCommand("copy");
+                document.body.removeChild(el);
+            }
+        },
+        13:{
             title:"Import mod",
             canClick:true,
             onClick(){
@@ -75,7 +88,7 @@ addLayer("tree-tab", {
                 if(imported){
                     ticking=true;
                     try {
-                        mod = JSON.parse(imported);
+                        mod = eval("("+imported+")");
                         save();
                 		window.location.reload();
                     } catch (e) {

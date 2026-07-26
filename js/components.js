@@ -5,7 +5,7 @@ function loadVue() {
 	Vue.component('editable', {
 		props: ['data','ptr'],
 		template: `
-			<span v-html="data" contenteditable="true"
+			<span v-html="data==''?'Click to enter text':data" contenteditable="true"
 			 onfocus="editableOnFocus(this)"
 			 onblur="editableOnBlur(this)"></span>
 		`
